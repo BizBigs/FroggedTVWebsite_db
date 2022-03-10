@@ -5,11 +5,12 @@
 CREATE TABLE IF NOT EXISTS public.ftv_user
 (
     id_user integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
-    email character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    email character varying(50) COLLATE pg_catalog."default" NOT NULL UNIQUE,
     created_at timestamp with time zone NOT NULL,
     last_modified timestamp with time zone NOT NULL,
     password character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    nickname character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    nickname character varying(20) COLLATE pg_catalog."default" NOT NULL UNIQUE,
+    public_id character varying(50) COLLATE pg_catalog."default" NOT NULL UNIQUE,
     CONSTRAINT ftv_user_pkey PRIMARY KEY (id_user)
 )
 
@@ -98,6 +99,22 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.ftv_comment
     OWNER to admin;
 
+-- Table: public.ftv_tag
+
+-- DROP TABLE IF EXISTS public.ftv_tag;
+
+CREATE TABLE IF NOT EXISTS public.ftv_tag
+(
+    id_tag integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    name character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT ftv_tag_pkey PRIMARY KEY (id_tag)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.ftv_tag
+    OWNER to admin;
+
 -- Table: public.link_ftv_blog_post_ftv_tag
 
 -- DROP TABLE IF EXISTS public.link_ftv_blog_post_ftv_tag;
@@ -107,11 +124,11 @@ CREATE TABLE IF NOT EXISTS public.link_ftv_blog_post_ftv_tag
     id_link integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     tag_id integer NOT NULL,
     blog_post_id integer NOT NULL,
-    CONSTRAINT link_ftv_blog_post_ftv_tag_pkey PRIMARY KEY (id_link),
     CONSTRAINT "FK_LINK_FTV_BLOGPOST" FOREIGN KEY (blog_post_id)
         REFERENCES public.ftv_blog_post (id_blog_post) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE NO ACTION
+        NOT VALID,
     CONSTRAINT "FK_LINK_FTV_TAG" FOREIGN KEY (tag_id)
         REFERENCES public.ftv_tag (id_tag) MATCH SIMPLE
         ON UPDATE NO ACTION
