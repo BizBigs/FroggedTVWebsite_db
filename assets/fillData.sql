@@ -5,13 +5,16 @@
 CREATE TABLE IF NOT EXISTS public.ftv_user
 (
     id_user integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
-    email character varying(50) COLLATE pg_catalog."default" NOT NULL UNIQUE,
+    email character varying(50) COLLATE pg_catalog."default" NOT NULL,
     created_at timestamp with time zone NOT NULL,
     last_modified timestamp with time zone NOT NULL,
-    password character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    nickname character varying(20) COLLATE pg_catalog."default" NOT NULL UNIQUE,
-    public_id character varying(50) COLLATE pg_catalog."default" NOT NULL UNIQUE,
-    CONSTRAINT ftv_user_pkey PRIMARY KEY (id_user)
+    password character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    nickname character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    public_id character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT ftv_user_pkey PRIMARY KEY (id_user),
+    CONSTRAINT ftv_user_email_key UNIQUE (email),
+    CONSTRAINT ftv_user_nickname_key UNIQUE (nickname),
+    CONSTRAINT ftv_user_public_id_key UNIQUE (public_id)
 )
 
 TABLESPACE pg_default;
