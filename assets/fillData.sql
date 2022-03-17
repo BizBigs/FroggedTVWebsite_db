@@ -481,3 +481,5 @@ insert into ftv_blog_post(title, content, created_at, last_modified, author_id) 
     ('tronpa', 'lorem ipsum', TO_TIMESTAMP('2017-03-31 9:30:20','YYYY-MM-DD HH:MI:SS'), TO_TIMESTAMP('2017-03-31 9:30:20','YYYY-MM-DD HH:MI:SS'), 5),
     ('tronpaV2', 'lorem ipsum', TO_TIMESTAMP('2017-03-31 9:30:20','YYYY-MM-DD HH:MI:SS'), TO_TIMESTAMP('2017-03-31 9:30:20','YYYY-MM-DD HH:MI:SS'), 5),
     ('CanardV234', 'lorem ipsum', TO_TIMESTAMP('2017-03-31 9:30:20','YYYY-MM-DD HH:MI:SS'), TO_TIMESTAMP('2017-03-31 9:30:20','YYYY-MM-DD HH:MI:SS'), 5);
+
+insert into ftv_roles(role_name) values ('SuperAdmin');
